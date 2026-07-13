@@ -5,13 +5,25 @@ Open Business Blueprint for **ISCO-08 2434**: Information and Communications Tec
 pure-cognitive work, the LLM-first wave, **no robotics gate** —
 eligible for actor implementation now.
 
-**Maturity: `:blueprint`** — blueprint only; **no actor implementation
-yet**, and none is claimed. The implemented actor will follow the
-fleet-standard pattern (advisor-LLM sealed behind the independent
-`:ict-sales-governor` governor, human approval workflow, append-only
-audit ledger); outbound communication (PR releases, sales outreach) is
-always :external-send and never auto-committed. Fourth wave-0 cognitive
-batch (ADR-2607122700 addenda).
+**Maturity: `:implemented`** — ICTSalesAdvisor ⊣ ICTSalesGovernor as a
+langgraph StateGraph (`intake → advise → govern → decide →
+commit/hold`, human-approval interrupt), modeled on
+cloud-itonami-isco-4311's bookkeeping actor. 13 tests / 27 assertions
+green.
+
+The licensing-quote HARD invariants — arithmetic and matrix lookup,
+not a sales pitch:
+
+1. **Seat-count ceiling** — the proposed seat count must not exceed
+   the bundle's registered max-seats.
+2. **Component compatibility** — every proposed component must be a
+   member of the bundle's registered compatible-components set — an
+   incompatible bundle is a matrix lookup, not a sales pitch.
+
+Also HARD: unregistered/foreign bundle, unregistered organization,
+non-`:propose` effect. Escalations (always human sign-off):
+`:approve-enterprise-quote` (large-account commitment), low confidence
+(< 0.6).
 
 AGPL-3.0-or-later, forkable by any qualified operator. Part of the
 [cloud-itonami](https://itonami.cloud) open business fleet.
