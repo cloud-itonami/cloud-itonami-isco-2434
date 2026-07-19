@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>ictsales operator console -- cloud-itonami-isco-2434</title>
+<style>body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;padding:2rem;background:#0b0d12;color:#e6e9ef}
+h1{font-size:1.4rem;margin:0 0 .25rem}
+h2{font-size:1.05rem;margin:2rem 0 .5rem;color:#9fb3c8}
+.sub{color:#8792a3;margin:0 0 1.5rem;font-size:.9rem}
+table{width:100%;border-collapse:collapse;margin-bottom:1rem;font-size:.88rem}
+th,td{text-align:left;padding:.45rem .6rem;border-bottom:1px solid #232833}
+th{color:#8792a3;font-weight:600;text-transform:uppercase;font-size:.72rem;letter-spacing:.03em}
+code{background:#151922;padding:.1rem .35rem;border-radius:4px;font-size:.85em}
+.ok{color:#4ade80;font-weight:600}
+.warn{color:#fbbf24;font-weight:600}
+.critical{color:#f87171;font-weight:600}
+.muted{color:#8792a3}
+.card{background:#12151c;border:1px solid #232833;border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.5rem}</style></head><body>
+<h1>ictsales operator console</h1>
+<p class="sub">ISCO-08 2434 &middot; community ICT sales professionals actor &middot; generated at build time by driving the real <code>ictsales.actor</code> StateGraph (<code>intake &rarr; advise &rarr; govern &rarr; decide &rarr; commit/hold</code>, human-approval interrupt for escalations) &mdash; no invented data, no timestamps.</p>
+<div class="card">
+<h2>Registered clients</h2>
+<table><thead><tr><th>client-id</th><th>name</th></tr></thead><tbody>
+<tr><td>client-1</td><td>Kobo Trade</td></tr>
+<tr><td>client-2</td><td>Second Co</td></tr>
+</tbody></table>
+<h2>Registered bundles</h2>
+<table><thead><tr><th>bundle-id</th><th>client-id</th><th>name</th><th>max-seats</th><th>compatible-components</th></tr></thead><tbody>
+<tr><td>B-1</td><td>client-1</td><td>team-suite</td><td>100</td><td>core</td></tr>
+<tr><td>B-2</td><td>client-2</td><td>starter-suite</td><td>20</td><td>core, sso</td></tr>
+</tbody></table>
+</div>
+<div class="card">
+<h2>Governor action gate (ictsales.governor/check)</h2>
+<table><thead><tr><th>kind</th><th>rule</th><th>meaning</th></tr></thead><tbody>
+<tr><td><span class="critical">HARD</span></td><td><code>:no-client</code></td><td>client provenance -- the organization must be registered.</td></tr>
+<tr><td><span class="critical">HARD</span></td><td><code>:no-actuation</code></td><td>proposal :effect must be :propose (structurally unreachable via the real mock-advisor -- see namespace docstring).</td></tr>
+<tr><td><span class="critical">HARD</span></td><td><code>:unknown-bundle</code></td><td>a quote approval must cite a REGISTERED bundle belonging to this client.</td></tr>
+<tr><td><span class="critical">HARD</span></td><td><code>:bundle-wrong-client</code></td><td>the cited bundle must belong to the requesting client.</td></tr>
+<tr><td><span class="critical">HARD</span></td><td><code>:seat-count-exceeds-ceiling</code></td><td>proposed seat count must not exceed the bundle's registered :max-seats (arithmetic, not a negotiating position).</td></tr>
+<tr><td><span class="critical">HARD</span></td><td><code>:incompatible-component</code></td><td>every proposed component must be a member of the bundle's registered :compatible-components set (a matrix lookup, not a sales pitch).</td></tr>
+<tr><td><span class="warn">ESCALATE</span></td><td><code>:approve-enterprise-quote</code></td><td>large-account commitment always requires human sign-off (interrupt-before :request-approval, resumed by approve!).</td></tr>
+<tr><td><span class="warn">ESCALATE</span></td><td><code>low confidence (&lt; 0.6)</code></td><td>confidence floor is 0.6; every stake value the real mock-advisor supports produces &gt;= 0.7, so this branch is not reachable in this scenario (noted honestly, not faked).</td></tr>
+</tbody></table>
+</div>
+<div class="card">
+<h2>Audit trail (this scenario's real graph runs)</h2>
+<table><thead><tr><th>thread-id</th><th>client</th><th>request</th><th>outcome</th></tr></thead><tbody>
+<tr><td><code>c1-approve-quote-ok</code></td><td>client-1</td><td>approve-quote &middot; bundle=B-1 &middot; seats=80 &middot; components={core}</td><td><span class="ok">committed</span></td></tr>
+<tr><td><code>c1-over-seat-ceiling</code></td><td>client-1</td><td>approve-quote &middot; bundle=B-1 &middot; seats=500 &middot; components={core}</td><td><span class="critical">HARD hold &middot; seat-count-exceeds-ceiling</span></td></tr>
+<tr><td><code>c1-incompatible-component</code></td><td>client-1</td><td>approve-quote &middot; bundle=B-1 &middot; seats=50 &middot; components={legacy-plugin}</td><td><span class="critical">HARD hold &middot; incompatible-component</span></td></tr>
+<tr><td><code>c1-unknown-bundle</code></td><td>client-1</td><td>approve-quote &middot; bundle=B-ghost &middot; seats=50 &middot; components={core}</td><td><span class="critical">HARD hold &middot; unknown-bundle</span></td></tr>
+<tr><td><code>nobody-no-client</code></td><td>nobody</td><td>approve-quote &middot; bundle=B-1 &middot; seats=50 &middot; components={core}</td><td><span class="critical">HARD hold &middot; no-client</span></td></tr>
+<tr><td><code>c2-bundle-wrong-client</code></td><td>client-2</td><td>approve-quote &middot; bundle=B-1 &middot; seats=10 &middot; components={core}</td><td><span class="critical">HARD hold &middot; bundle-wrong-client</span></td></tr>
+<tr><td><code>c2-approve-quote-ok</code></td><td>client-2</td><td>approve-quote &middot; bundle=B-2 &middot; seats=15 &middot; components={core}</td><td><span class="ok">committed</span></td></tr>
+<tr><td><code>c1-enterprise-quote</code></td><td>client-1</td><td>approve-enterprise-quote &middot; bundle=B-1 &middot; seats=80 &middot; components={core}</td><td><span class="ok">approved &amp; committed</span></td></tr>
+</tbody></table>
+</div>
+</body></html>
