@@ -58,7 +58,8 @@
 
   Usage: `clojure -M:render-html [out-file]` (default
   `docs/samples/operator-console.html`)."
-  (:require [clojure.string :as str]
+  (:require [jp-go-dds.skin]
+            [clojure.string :as str]
             [ictsales.store :as store]
             [ictsales.actor :as actor]))
 
@@ -197,7 +198,9 @@ code{background:#151922;padding:.1rem .35rem;border-radius:4px;font-size:.85em}
    ["<!doctype html>"
     "<html><head><meta charset=\"utf-8\">"
     "<title>ictsales operator console -- cloud-itonami-isco-2434</title>"
-    (str "<style>" style "</style></head><body>")
+    (str "<style>"
+   (jp-go-dds.skin/dds+skin)
+   "</style></head><body>")
     "<h1>ictsales operator console</h1>"
     (str "<p class=\"sub\">ISCO-08 2434 &middot; community ICT sales professionals actor &middot; "
          "generated at build time by driving the real <code>ictsales.actor</code> StateGraph "
