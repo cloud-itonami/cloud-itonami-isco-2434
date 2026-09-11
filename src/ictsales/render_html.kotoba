@@ -56,7 +56,7 @@
       confidence >= 0.7, above the 0.6 floor. No real request drives
       this branch.
 
-  Usage: `clojure -M:render-html [out-file]` (default
+  Usage: `kbb -M:render-html [out-file]` (default
   `docs/samples/operator-console.html`)."
   (:require [jp-go-dds.skin]
             [kotoba.lang.text :as str]
