@@ -1,0 +1,33 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; ISCO 2434, ICT sales professionals. The README calls this pure-cognitive work with no robotics
+;; gate; blueprint.edn nevertheless declares :itonami.blueprint/robotics true.
+;; The physical work declared here is the handling the occupation itself
+;; entails (ASSUMPTION, not stated in the README): lifting a rack-mount demo server out of its flight case onto the customer's demo bench, and carrying the demo kit from the car park to the customer's office.
+;; Replace with the README premise once one is written.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isco-2434"
+ :cases
+ [{:id :demo-server-onto-bench
+   :kind :manipulator
+   :procedure "arm lifts a rack-mount demo server out of its flight case onto the customer's demo bench"
+   :params {:l1-m 0.60 :l2-m 0.55 :m1-kg 8.0 :m2-kg 6.0
+            :from [0.70 -0.30] :to [0.55 0.25] :duration-s 3.0 :steps 500}
+   :sweep {:param :payload-kg :values [8.0 14.0 20.0 26.0 32.0]}
+   :quantity :peak-tau1-nm
+   :limit {:max 350.0 :basis "estimate: continuous shoulder torque of a 20 kg-payload class industrial arm"}
+   :boundary {:lo 1.0 :hi 80.0}}
+  {:id :demo-kit-to-customer
+   :kind :transport
+   :procedure "AMR carries the demo kit (server flight case, switch, cabling) from the car park to the customer's office"
+   :params {:mass-kg 40.0 :payload-kg 45.0 :v-max-mps 1.0 :a-max-mps2 0.5
+            :brake-decel-mps2 0.6 :drive-force-n 90.0 :crr 0.02
+            :cog-height-m 0.70 :support-half-length-m 0.28}
+   :sweep {:param :distance-m :values [30.0 60.0 90.0 120.0 160.0]}
+   :quantity :cycle-time-s
+   :limit {:max 120.0 :basis "estimate: kit must reach the customer's office within 2 minutes so setup fits the meeting slot"}
+   :boundary {:lo 5.0 :hi 300.0}}]}
