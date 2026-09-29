@@ -1,7 +1,7 @@
 (ns ictsales.governor
   "ICTSalesGovernor — the independent safety/traceability layer for
   the ISCO-08 2434 community ICT sales professionals actor (itonami
-  actor pattern, ADR-2607011000 / CLAUDE.md Actors section). Modeled
+  actor pattern, ADR-2607011000 / AGENTS.md Actors section). Modeled
   on cloud-itonami-isco-4311's bookkeeping.governor. ICT-sales twist:
   a quote's seat count is arithmetic comparison against the registered
   tier ceiling, and every included component must be a member of the
